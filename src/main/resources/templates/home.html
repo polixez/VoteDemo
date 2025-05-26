@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Home</title>
+    <meta charset="UTF-8" />
+</head>
+<body>
+<h1>Добро пожаловать, <span th:text="${username}">Пользователь</span>!</h1>
+<a th:href="@{/logout}">Выйти</a>
+
+<h2>Голосование</h2>
+<form th:action="@{/home}" method="post">
+    <input type="hidden" name="formType" value="vote" />
+    <p>Ваш любимый язык программирования:</p>
+    <label th:each="option : ${options}">
+        <input type="radio" name="option" th:value="${option}" required /> <span th:text="${option}"></span><br/>
+    </label><br/>
+    <button type="submit">Голосовать</button>
+</form>
+
+<p th:if="${voteResult}" th:text="${voteResult}" style="color: green;"></p>
+
+<h3>Результаты голосования:</h3>
+<ul>
+    <li th:each="entry : ${voteCounts}">
+        <span th:text="${entry.key}">Option</span>: <span th:text="${entry.value}">0</span>
+    </li>
+</ul>
+</body>
+</html>
